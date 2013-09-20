@@ -1,18 +1,14 @@
-Soundcloud = {};
-
-// Request Soundcloud credentials for the user
+// Request soundcloud credentials for the user
 // @param options {optional}
 // @param credentialRequestCompleteCallback {Function} Callback function to call on
 //   completion. Takes one argument, credentialToken on success, or Error on
 //   error.
-Soundcloud.requestCredential = function (options, credentialRequestCompleteCallback) {
+Accounts.soundcloud.requestCredential = function (options, credentialRequestCompleteCallback) {
   // support both (options, callback) and (callback).
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
     credentialRequestCompleteCallback = options;
     options = {};
-  } else if (!options) {
-    options = {};
-  }
+  } else if (!options) { options = {}; }
 
   var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
   if (!config) {
@@ -21,42 +17,46 @@ Soundcloud.requestCredential = function (options, credentialRequestCompleteCallb
   }
 
   var credentialToken = Random.id();
-
+  var redirect_uri = encodeURIComponent(config.redirect_uri);
   var loginUrl =
       'https://soundcloud.com/connect' +
       '?client_id=' + config.clientId +
-      '&redirect_uri=' + Meteor.absoluteUrl('_oauth/soundcloud?close') +
+      '&redirect_uri=' + redirect_uri +
       '&scope=non-expiring' +
       '&response_type=code_and_token' +
       '&display=popup' +
       '&state=' + credentialToken;
 
-  Oauth.initiateLogin(credentialToken, loginUrl, credentialRequestCompleteCallback);
+  Oauth.initiateLogin(
+    credentialToken, loginUrl, credentialRequestCompleteCallback);
 };
 
-var ready = false;
-var readyDep = new Deps.Dependency;
+// var ready = false;
+// var readyDep = new Deps.Dependency;
 
-Soundcloud.ready = function (){
-  readyDep.depend();
-  return ready;
-};
+// Accounts.soundcloud.ready = function (){
+//   readyDep.depend();
+//   return ready;
+// };
 
-Meteor.startup(function() {
-  Deps.autorun(function() {
-    if (Accounts.loginServicesConfigured()) {
-      var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
+// Meteor.startup(function() {
+//   Deps.autorun(function() {
+//     if (Accounts.loginServicesConfigured()) {
+//       var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
 
-      if (!config) {
-        throw new Error("Soundcloud service is not configured");
-      }
+//       if (!config) {
+//         throw new Error("soundcloud service is not configured");
+//       }
 
-      SC.initialize({
-        client_id: config.clientId
-      });
+//       // console.info("soundcloud account config:", config);
 
-      ready = true;
-      readyDep.changed();
-    }
-  });
-});
+//       SC.initialize({
+//         client_id: config.clientId,
+//         redirect_uri: Meteor.absoluteUrl("_oauth/soundcloud?close")
+//       });
+
+//       ready = true;
+//       readyDep.changed();
+//     }
+//   });
+// });

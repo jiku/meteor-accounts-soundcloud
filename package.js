@@ -13,10 +13,11 @@ Package.on_use(function(api) {
 
   api.export('Soundcloud');
 
-  api.add_files(
-    ['soundcloud_configure.html', 'soundcloud_configure.js'],
-    'client');
-
+  api.add_files([
+    'soundcloud_configure.html',
+    'soundcloud_configure.js',
+    'soundcloud_client.js'
+  ], 'client');
+  api.add_files('soundcloud_common.js', ['client', 'server']);
   api.add_files('soundcloud_server.js', 'server');
-  api.add_files(['soundcloud_client.js', 'sdk.js'], 'client');
 });

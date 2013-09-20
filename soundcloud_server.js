@@ -1,34 +1,34 @@
-Soundcloud = {};
-
 //see http://developers.soundcloud.com/docs/api/reference#me
-Soundcloud.whitelistedFields = ['id','username','permalink_url','avatar_url','country',
-                      'full_name','city','description','website'];
+Accounts.soundcloud.whitelistedFields = [
+  'id', 'username', 'permalink', 'permalink_url', 'avatar_url', 'country',
+  'full_name', 'city', 'description', 'website', 'discogs-name', 'myspace-name',
+  'track_count', 'playlist_count', 'followers_count', 'followings_count',
+  'public_favorites_count', 'private_tracks_count', 'private_playlists_count'
+];
 
-Oauth.registerService('soundcloud', 2, null, function(query) {
+var handleOauthRequest = function(query) {
   var accessToken = getAccessToken(query);
   var identity = getIdentity(accessToken);
 
-  var serviceData = {
-    accessToken: accessToken
-  };
-
-  var scFields = _.pick(identity, Soundcloud.whitelistedFields);
-  _.extend(serviceData, scFields);
-
-  return {
+  // call user update method here..
+  var serviceData = {accessToken: accessToken};
+  var serviceFields = _.pick(identity, Accounts.soundcloud.whitelistedFields);
+  _.extend(serviceData, serviceFields);
+  var rv = {
     serviceData: serviceData,
     options: {profile: {name: identity.full_name}}
   };
-});
+  return rv;
+};
 
 var getAccessToken = function (query) {
   var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
   if (!config)
     throw new ServiceConfiguration.ConfigError("Service not configured");
 
-  var response;
+  var rv;
   try {
-     response = Meteor.http.post("https://api.soundcloud.com/oauth2/token", {
+    rv = Meteor.http.post("https://api.soundcloud.com/oauth2/token", {
       headers: {Accept: 'application/json'},
       params: {
         code: query.code,
@@ -40,28 +40,42 @@ var getAccessToken = function (query) {
       }
     });
   } catch (err) {
-    throw new Error("Failed to complete OAuth handshake with Soundcloud. " + err.message);
+    throw new Error("Failed to complete OAuth handshake with soundcloud. " + err.message);
   }
 
-  if (response.data.error) // if the http response was a json object with an error attribute
-    throw new Error("Failed to complete OAuth handshake with Soundcloud. " + response.data.error);
+  if (rv.data.error) // if the http rv was a json object with an error attribute
+    throw new Error("Failed to complete OAuth handshake with soundcloud. " + rv.data.error);
 
-  return response.data.access_token;
+  return rv.data.access_token;
 };
 
 var getIdentity = function (accessToken) {
   try {
-    return Meteor.http.get("https://api.soundcloud.com/me", {
+    var rv = Meteor.http.get("https://api.soundcloud.com/me", {
       params: {
         oauth_token: accessToken,
         format: "json"
       }
-    }).data;
+    });
+    // console.info("fetching identity from: https://api.soundcloud.com/me", rv);
+    return rv.data;
   } catch (err) {
-    throw new Error("Failed to fetch identity from Soundcloud. " + err.message);
+    throw new Error("Failed to fetch identity from soundcloud. " + err.message);
   }
 };
 
-Soundcloud.retrieveCredential = function(credentialToken) {
+Accounts.soundcloud.retrieveCredential = function(credentialToken) {
   return Oauth.retrieveCredential(credentialToken);
 };
+
+
+Oauth.registerService(
+  'soundcloud', 2, null, handleOauthRequest);
+
+
+Accounts.registerLoginHandler(function(loginRequest) {
+  if(!loginRequest.soundcloud) {
+    return undefined;
+  }
+  return {id: Meteor.userId()};
+});
