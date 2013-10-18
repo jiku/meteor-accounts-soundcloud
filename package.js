@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "SoundCloud SDK and OAuth login service for Meteor"
+  summary: "soundcloud oauth login service for meteor"
 });
 
 Package.on_use(function(api) {

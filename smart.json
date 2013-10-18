@@ -1,8 +1,8 @@
 {
   "name": "soundcloud",
-  "description": "SoundCloud SDK and OAuth login service",
-  "homepage": "https://github.com/sylvaingi/meteor-soundcloud",
-  "author": "Sylvain Gizard <sylvain.gizard@gmail.com>",
+  "description": "soundcloud oauth login service",
+  "homepage": "https://github.com/unvael/meteor-soundcloud",
+  "author": "gregory nicholas <gregory@unvael.com>",
   "version": "0.1.1",
-  "git": "https://github.com/sylvaingi/meteor-soundcloud.git"
+  "git": "https://github.com/unvael/meteor-soundcloud.git"
 }
