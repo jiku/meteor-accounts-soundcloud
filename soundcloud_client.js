@@ -7,8 +7,7 @@ Accounts.soundcloud.requestCredential = function (options, credentialRequestComp
   // support both (options, callback) and (callback).
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
     credentialRequestCompleteCallback = options;
-    options = {};
-  } else if (!options) { options = {}; }
+  }
 
   var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
   if (!config) {

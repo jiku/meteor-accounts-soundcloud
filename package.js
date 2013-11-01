@@ -4,20 +4,22 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.use('oauth2', ['client', 'server']);
-  api.use('oauth', ['client', 'server']);
+  Package.both = ['client', 'server'];
+
+  api.use('accounts-base', Package.both);
+  // Export Accounts (etc) to packages using this one.
+  // api.imply('accounts-base', Package.both);
+  api.use('accounts-oauth', Package.both);
+
+  api.use('oauth2', Package.both);
+  api.use('oauth', Package.both);
   api.use('http', 'server');
+  api.use('underscore', 'server');
   api.use('random', 'client');
-  api.use('service-configuration', ['client', 'server']);
+  api.use('service-configuration', Package.both);
 
-  api.export('Soundcloud');
-
-  api.add_files([
-    'soundcloud_configure.html',
-    'soundcloud_configure.js',
-    'soundcloud_client.js'
-  ], 'client');
-  api.add_files('soundcloud_common.js', ['client', 'server']);
+  api.add_files('soundcloud_common.js', Package.both);
+  api.add_files('soundcloud_client.js', 'client');
   api.add_files('soundcloud_server.js', 'server');
 
 });

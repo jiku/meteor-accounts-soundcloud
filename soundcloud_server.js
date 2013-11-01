@@ -1,4 +1,6 @@
-//see http://developers.soundcloud.com/docs/api/reference#me
+Accounts.oauth.registerService('soundcloud');
+
+// see: http://developers.soundcloud.com/docs/api/reference#me
 Accounts.soundcloud.whitelistedFields = [
   'id', 'username', 'permalink', 'permalink_url', 'avatar_url', 'country',
   'full_name', 'city', 'description', 'website', 'discogs-name', 'myspace-name',
@@ -12,8 +14,8 @@ var handleOauthRequest = function(query) {
 
   // call user update method here..
   var serviceData = {accessToken: accessToken};
-  var serviceFields = _.pick(identity, Accounts.soundcloud.whitelistedFields);
-  _.extend(serviceData, serviceFields);
+  var _serviceFields = _.pick(identity, Accounts.soundcloud.whitelistedFields);
+  _.extend(serviceData, _serviceFields);
   var rv = {
     serviceData: serviceData,
     options: {profile: {name: identity.full_name}}
@@ -68,13 +70,4 @@ Accounts.soundcloud.retrieveCredential = function(credentialToken) {
   return Oauth.retrieveCredential(credentialToken);
 };
 
-
 Oauth.registerService('soundcloud', 2, null, handleOauthRequest);
-Accounts.registerLoginHandler(function(loginRequest) {
-  if(!loginRequest.soundcloud) {
-    return undefined;
-  }
-  return {id: Meteor.userId()};
-});
-
-Accounts.oauth.registerService('soundcloud');
