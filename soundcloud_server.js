@@ -69,13 +69,12 @@ Accounts.soundcloud.retrieveCredential = function(credentialToken) {
 };
 
 
-Oauth.registerService(
-  'soundcloud', 2, null, handleOauthRequest);
-
-
+Oauth.registerService('soundcloud', 2, null, handleOauthRequest);
 Accounts.registerLoginHandler(function(loginRequest) {
   if(!loginRequest.soundcloud) {
     return undefined;
   }
   return {id: Meteor.userId()};
 });
+
+Accounts.oauth.registerService('soundcloud');

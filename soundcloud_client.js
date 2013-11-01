@@ -30,33 +30,3 @@ Accounts.soundcloud.requestCredential = function (options, credentialRequestComp
   Oauth.initiateLogin(
     credentialToken, loginUrl, credentialRequestCompleteCallback);
 };
-
-// var ready = false;
-// var readyDep = new Deps.Dependency;
-
-// Accounts.soundcloud.ready = function (){
-//   readyDep.depend();
-//   return ready;
-// };
-
-// Meteor.startup(function() {
-//   Deps.autorun(function() {
-//     if (Accounts.loginServicesConfigured()) {
-//       var config = ServiceConfiguration.configurations.findOne({service: 'soundcloud'});
-
-//       if (!config) {
-//         throw new Error("soundcloud service is not configured");
-//       }
-
-//       // console.info("soundcloud account config:", config);
-
-//       SC.initialize({
-//         client_id: config.clientId,
-//         redirect_uri: Meteor.absoluteUrl("_oauth/soundcloud?close")
-//       });
-
-//       ready = true;
-//       readyDep.changed();
-//     }
-//   });
-// });

@@ -1,3 +1,4 @@
+
 Package.describe({
   summary: "soundcloud oauth login service for meteor"
 });
@@ -6,10 +7,8 @@ Package.on_use(function(api) {
   api.use('oauth2', ['client', 'server']);
   api.use('oauth', ['client', 'server']);
   api.use('http', 'server');
-  api.use('templating', 'client');
   api.use('random', 'client');
   api.use('service-configuration', ['client', 'server']);
-  api.use('deps', 'client');
 
   api.export('Soundcloud');
 
@@ -20,4 +19,5 @@ Package.on_use(function(api) {
   ], 'client');
   api.add_files('soundcloud_common.js', ['client', 'server']);
   api.add_files('soundcloud_server.js', 'server');
+
 });
