@@ -1,1 +1,0 @@
-Accounts.soundcloud = Accounts.soundcloud || {};

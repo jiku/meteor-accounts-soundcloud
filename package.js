@@ -1,25 +1,21 @@
 
 Package.describe({
-  summary: "soundcloud oauth login service for meteor"
+  summary: "soundcloud oauth login service for meteor",
+  name: "quietcreep:accounts-soundcloud",
+  version: "1.0.0",
+  git: "https://github.com/quietcreep/meteor-soundcloud.git",
+  author: "gregory nicholas <gregory@unvael.com>; dustin chaffin",
 });
 
 Package.on_use(function(api) {
-  Package.both = ['client', 'server'];
+  var both = [ 'client', 'server' ];
 
-  api.use('accounts-base', Package.both);
+  api.use( 'accounts-base', both );
   // Export Accounts (etc) to packages using this one.
-  // api.imply('accounts-base', Package.both);
-  api.use('accounts-oauth', Package.both);
+  api.imply( 'accounts-base', both );
+  api.use( 'accounts-oauth', both );
+  api.use( 'quietcreep:soundcloud@1.0.0', both )
 
-  api.use('oauth2', Package.both);
-  api.use('oauth', Package.both);
-  api.use('http', 'server');
-  api.use('underscore', 'server');
-  api.use('random', 'client');
-  api.use('service-configuration', Package.both);
-
-  api.add_files('soundcloud_common.js', Package.both);
-  api.add_files('soundcloud_client.js', 'client');
-  api.add_files('soundcloud_server.js', 'server');
-
+  api.add_files( 'soundcloud-login-button.css', both );
+  api.add_files( 'soundcloud.js', both );
 });

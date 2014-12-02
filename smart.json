@@ -1,8 +1,0 @@
-{
-  "name": "soundcloud",
-  "description": "soundcloud oauth login service",
-  "homepage": "https://github.com/unvael/meteor-soundcloud",
-  "author": "gregory nicholas <gregory@unvael.com>",
-  "version": "0.1.2",
-  "git": "https://github.com/unvael/meteor-soundcloud.git"
-}

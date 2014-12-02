@@ -9,7 +9,7 @@ soundcloud for meteor
 ### installation
 add the soundcloud package with [meteorite](https://github.com/oortcloud/meteorite/) using the following command:
 
-    $ mrt add soundcloud
+    $ meteor add quietcreep:accounts-soundcloud
 
 
 -----
@@ -25,3 +25,4 @@ if you configured your client id and client secret using either the accounts-ui 
 
 ### credits
 * [@mataspetrikas](https://github.com/mataspetrikas) for the original soundcloud accounts port
+* [@unvael](https://github.com/unvael) for updates to the original soundcloud accounts port
