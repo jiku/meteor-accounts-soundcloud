@@ -10,10 +10,10 @@ Package.describe({
 Package.on_use(function(api) {
   var both = [ 'client', 'server' ];
 
-  api.use( 'accounts-base', both );
+  api.use( 'accounts-base@1.1.0', both );
   // Export Accounts (etc) to packages using this one.
   api.imply( 'accounts-base', both );
-  api.use( 'accounts-oauth', both );
+  api.use( 'accounts-oauth@1.1.0', both );
   api.use( 'quietcreep:soundcloud@1.0.0', both )
 
   api.add_files( 'soundcloud-login-button.css', both );
