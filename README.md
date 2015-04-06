@@ -9,7 +9,7 @@ soundcloud for meteor
 ### installation
 add the soundcloud package with [meteorite](https://github.com/oortcloud/meteorite/) using the following command:
 
-    $ meteor add quietcreep:accounts-soundcloud
+    $ meteor add jiku:accounts-soundcloud
 
 
 -----
